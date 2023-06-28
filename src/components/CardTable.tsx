@@ -14,8 +14,11 @@ const cardObjects = [
 ]
 let cards: JSX.Element[] = cardObjects.map(cardObject => <Card cardObject={cardObject} key={cardObject.title} />);
 
+function shuffleCards() {
+    cards = cards.sort(() => Math.random() - 0.5);
+}
+
 export default function CardTable() {
-    console.log(cards);
 
     return (
         <div className="card-table">
