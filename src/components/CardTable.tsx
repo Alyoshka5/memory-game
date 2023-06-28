@@ -1,4 +1,5 @@
 import Card from './Card';
+import { useState, useRef, useEffect } from 'react';
 
 const cardObjects = [
     {title: 'Java', imgUrl: 'java.png' },
@@ -12,17 +13,39 @@ const cardObjects = [
     {title: 'Elixir', imgUrl: 'elixir.jpg' },
     {title: 'Perl', imgUrl: 'perl.jpg' }
 ]
-let cards: JSX.Element[] = cardObjects.map(cardObject => <Card cardObject={cardObject} key={cardObject.title} />);
 
-function shuffleCards() {
-    cards = cards.sort(() => Math.random() - 0.5);
+function handleCardClick() {
+    
 }
 
 export default function CardTable() {
+    const [cards, setCards] = useState(cardObjects.map((cardObject, idx) => <Card cardObject={cardObject} key={idx} />))
+    const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+
+    useEffect(() => {
+        cardRefs.current.forEach(cardRef => {
+            if (cardRef) {
+                cardRef.addEventListener('click', handleCardClick);
+            }
+        });
+
+        const cardRefsArray = cardRefs.current;
+        return () => {
+            cardRefsArray.forEach(cardRef => {
+                if (cardRef) {
+                    cardRef.removeEventListener('click', handleCardClick);
+                }
+            });
+        }
+    }, []);
 
     return (
         <div className="card-table">
-            {cards}
+            {cards.map((card, idx) => (
+                <div ref={ref => cardRefs.current[idx] = ref} key={idx}>
+                    {card}
+                </div>
+            ))}
         </div>
     );
 }
