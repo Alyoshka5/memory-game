@@ -7,4 +7,14 @@ interface cardObject {
     imgUrl: string
 }
 
-export type { CardProps }
+interface CardTableProps {
+    setCurrentScore(currentScore: number): void,
+    setHighScore(highScore: number): void
+}
+
+interface ScoreBoardProps {
+    currentScore: number,
+    highScore: number,
+}
+
+export type { CardProps, ScoreBoardProps, CardTableProps }

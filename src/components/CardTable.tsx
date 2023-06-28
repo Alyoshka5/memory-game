@@ -1,5 +1,6 @@
 import Card from './Card';
 import { useState, useRef, useEffect } from 'react';
+import { CardTableProps } from '../types';
 
 const cardObjects = [
     {title: 'Java', imgUrl: 'java.png' },
@@ -14,14 +15,14 @@ const cardObjects = [
     {title: 'Perl', imgUrl: 'perl.jpg' }
 ]
 
-function handleCardClick() {
-    
+const handleCardClick = () => {
+
 }
 
-export default function CardTable() {
+export default function CardTable({ setCurrentScore, setHighScore }: CardTableProps) {
     const [cards, setCards] = useState(cardObjects.map((cardObject, idx) => <Card cardObject={cardObject} key={idx} />))
     const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
-
+    
     const shuffleCards = () => {
         const shuffledCards = cards.sort(() => Math.random() - 0.5);
         setCards([...shuffledCards]);
