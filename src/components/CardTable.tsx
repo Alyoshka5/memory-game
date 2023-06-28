@@ -22,7 +22,14 @@ export default function CardTable() {
     const [cards, setCards] = useState(cardObjects.map((cardObject, idx) => <Card cardObject={cardObject} key={idx} />))
     const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
 
+    const shuffleCards = () => {
+        const shuffledCards = cards.sort(() => Math.random() - 0.5);
+        setCards([...shuffledCards]);
+    }
+
     useEffect(() => {
+        shuffleCards();
+
         cardRefs.current.forEach(cardRef => {
             if (cardRef) {
                 cardRef.addEventListener('click', handleCardClick);
