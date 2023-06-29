@@ -15,19 +15,13 @@ const cardObjects = [
     {title: 'Perl', imgUrl: 'perl.jpg' }
 ]
 
-const handleCardClick = () => {
-
-}
-
-export default function CardTable({ setCurrentScore, setHighScore }: CardTableProps) {
-    const [cards, setCards] = useState(cardObjects.map((cardObject, idx) => <Card cardObject={cardObject} key={idx} />))
+export default function CardTable({ currentScore, setCurrentScore, highScore, setHighScore }: CardTableProps) {
+    const [cards, setCards] = useState(cardObjects)
     const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+    const clickedCardsRef = useRef<Array<String>>([]);
+    const currentScoreRef = useRef<number>(0);
+    const highSCoreRef = useRef<number>(0);
     
-    const shuffleCards = () => {
-        const shuffledCards = cards.sort(() => Math.random() - 0.5);
-        setCards([...shuffledCards]);
-    }
-
     useEffect(() => {
         shuffleCards();
 
@@ -47,11 +41,45 @@ export default function CardTable({ setCurrentScore, setHighScore }: CardTablePr
         }
     }, []);
 
+    const shuffleCards = () => {
+        const shuffledCards = cards.sort(() => Math.random() - 0.5);
+        setCards([...shuffledCards]);
+    }
+
+    const handleCardClick = (e: Event) => {
+        if (!e.currentTarget) return;
+
+        const cardContainer = e.currentTarget as HTMLDivElement;
+        const card = cardContainer.querySelector('[data-card-title]');
+        if (!card) return;
+
+        const cardTitle = card.getAttribute('data-card-title');
+        if (!cardTitle) return;
+
+        if (clickedCardsRef.current.includes(cardTitle)) {
+            if (currentScoreRef.current > highSCoreRef.current) {
+                setHighScore(currentScoreRef.current);
+                highSCoreRef.current = currentScoreRef.current;
+            }
+            setCurrentScore(() => 0);
+            currentScoreRef.current = 0;
+            clickedCardsRef.current = [];
+        } else {
+            setCurrentScore((score) => score + 1);
+            currentScoreRef.current++;
+            clickedCardsRef.current.push(cardTitle);
+        }
+
+        shuffleCards();
+    }
+
     return (
         <div className="card-table">
             {cards.map((card, idx) => (
-                <div ref={ref => cardRefs.current[idx] = ref} key={idx}>
-                    {card}
+                <div key={idx}>
+                    <div ref={ref => cardRefs.current[idx] = ref}>
+                        <Card cardObject={card} />
+                    </div>
                 </div>
             ))}
         </div>

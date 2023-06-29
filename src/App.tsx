@@ -14,8 +14,8 @@ function App() {
         highScore={highScore} 
       />
       <CardTable 
-        setCurrentScore={setCurrentScore}
-        setHighScore={setHighScore}
+        currentScore={currentScore} setCurrentScore={setCurrentScore}
+        highScore={highScore} setHighScore={setHighScore}
       />
     </div>
   );

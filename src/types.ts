@@ -8,7 +8,9 @@ interface cardObject {
 }
 
 interface CardTableProps {
-    setCurrentScore(currentScore: number): void,
+    currentScore: number,
+    setCurrentScore(currentScore: (prevScore: number) => number): void,
+    highScore: number,
     setHighScore(highScore: number): void
 }
 
