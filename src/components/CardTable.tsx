@@ -1,18 +1,19 @@
 import Card from './Card';
 import { useState, useRef, useEffect } from 'react';
 import { CardTableProps } from '../types';
+import '../styles/CardTable.css';
 
 const cardObjects = [
-    {title: 'Java', imgUrl: 'java.png' },
+    {title: 'Java', imgUrl: 'java.jpg' },
     {title: 'Python', imgUrl: 'python.png' },
     {title: 'JavaScript',imgUrl: 'javascript.png' },
     {title: 'Swift', imgUrl: 'swift.jpeg' },
     {title: 'Ruby', imgUrl: 'ruby.png' },
     {title: 'Rust', imgUrl: 'rust.jpeg' },
-    {title: 'C++', imgUrl: 'c++.png' },
+    {title: 'C++', imgUrl: 'c++.avif' },
     {title: 'GO', imgUrl: 'go.png' },
     {title: 'Elixir', imgUrl: 'elixir.jpg' },
-    {title: 'Perl', imgUrl: 'perl.jpg' }
+    {title: 'Perl', imgUrl: 'perl.png' }
 ]
 
 export default function CardTable({ currentScore, setCurrentScore, highScore, setHighScore }: CardTableProps) {

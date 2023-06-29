@@ -1,4 +1,5 @@
 import { ScoreBoardProps } from '../types';
+import '../styles/ScoreBoard.css';
 
 export default function ScoreBoard({ currentScore, highScore}: ScoreBoardProps) {
 
